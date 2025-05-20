@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+</head>
+
+<body style="margin: 0">
+  <!-- Write your code below -->
+  <form onsubmit="handelFormSubmit(event)">
+  <label>
+    Name:
+    <input type="text"name="username"id="userName">
+    </label><br><br>
+    <label>
+        Email:
+        <input type="email"name="email"id="userEmail">
+        </label><br><br>
+        <label>
+            Phone:
+            <input type="tel"name="phone"id="userPhone">
+            </label><br><br>
+            <button type="submit">Submit</button>
+            </form>
+            <ul id="user-list"></ul>
+</body>
+<script >  
+function handelFormSubmit(event){
+    event.preventDefault();
+    const myobj={
+        Username:event.target.username.value,
+        Email:event.target.email.value,
+        Phone:event.target.phone.value
+    }
+    const myobjSrialized=JSON.stringify(myobj);
+    localStorage.setItem(myobj.Email,myobjSrialized);
+    showuserName(myobj);
+  }
+
+    function showuserName(myobj){
+        const parentElement=document.getElementById("user-list");
+        const childElement=document.createElement("li");
+        childElement.textContent=myobj.Username+"_"+myobj.Email+"_"+myobj.Phone;
+        parentElement.appendChild(childElement);
+        const deleteBtn=document.createElement("button");
+        deleteBtn.textContent="delete";
+        deleteBtn.setAttribute("type","button");
+        childElement.appendChild(deleteBtn);
+        const editBtn=document.createElement("button");
+        editBtn.textContent="edit";
+        editBtn.setAttribute("type","reset");
+        childElement.appendChild(editBtn);
+        deleteBtn.addEventListener("click",function(event){
+            parentElement.removeChild(childElement);
+            localStorage.removeItem(myobj.Email);
+        })
+        editBtn.addEventListener("click",function(event){
+            parentElement.removeChild(childElement);
+            localStorage.removeItem(myobj.Email);
+             document.getElementById("userName").value=myobj.Username;
+             document.getElementById("userEmail").value=myobj.Email;
+             document.getElementById("userPhone").value=myobj.Phone;
+        })
+
+    
+    }
+
+</script>
+</html>
