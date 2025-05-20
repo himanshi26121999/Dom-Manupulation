@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+</head>
+
+<body style="margin: 0">
+  <!-- Write your code below -->
+  <form onsubmit="handelFormSubmit(event)">
+  <label>
+    Name:
+    <input type="text"name="username">
+    </label><br><br>
+    <label>
+        Email:
+        <input type="email"name="email">
+        </label><br><br>
+        <label>
+            Phone:
+            <input type="tel"name="phone">
+            </label><br><br>
+            <button type="submit">Submit</button>
+            </form>
+            <ul id="user-list"></ul>
+</body>
+<script >  
+function handelFormSubmit(event){
+    event.preventDefault();
+    const myobj={
+        Username:event.target.username.value,
+        Email:event.target.email.value,
+        Phone:event.target.phone.value
+    }
+    const myobjSrialized=JSON.stringify(myobj);
+    localStorage.setItem(myobj.Email,myobjSrialized);
+    showuserName(myobj);
+  }
+
+    function showuserName(myobj){
+      const uList=document.getElementById("user-list");
+      const li=document.createElement("li");
+      const element=myobj.Username+"-"+myobj.Email+"-"+myobj.Phone;
+      const text=document.createTextNode(element);
+      li.appendChild(text);
+      const deleteButton=document.createElement("button");
+      deleteButton.textContent="deleteButton";
+      li.appendChild(deleteButton);
+      uList.appendChild(li);
+    }
+
+</script>
+</html>
